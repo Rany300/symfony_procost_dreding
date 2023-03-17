@@ -25,6 +25,23 @@ class MainController extends AbstractController
     }
 
 
+    #[Route('/detail', name: 'detail')]
+    public function detail(): Response
+    {
+        return $this->render('UserInterface/detail.html.twig', [
+            'controller_name' => 'MainController',
+        ]);
+    }
+
+    #[Route('/form', name: 'form')]
+    public function form(): Response
+    {
+        return $this->render('UserInterface/form.html.twig', [
+            'controller_name' => 'MainController',
+        ]);
+    }
+
+
 
 
 }
