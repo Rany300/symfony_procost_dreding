@@ -39,6 +39,21 @@ class EmployeRepository extends ServiceEntityRepository
         }
     }
 
+    public function findBestEmployes($limit = 5): array
+    {
+        // the employee that has the highest (cost*sum(duration)) is the best
+        return $this->getEntityManager()->createQuery(
+            'SELECT e
+        FROM App\Entity\Employe e
+        JOIN e.workUnits w
+        JOIN w.project p
+        GROUP BY e
+        ORDER BY SUM(w.duration * e.cost) DESC'
+        )
+            ->setMaxResults($limit)
+            ->getResult();
+    }
+
 //    /**
 //     * @return Employe[] Returns an array of Employe objects
 //     */

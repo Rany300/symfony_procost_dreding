@@ -147,4 +147,17 @@ class Employe
 
         return $this;
     }
+
+    public function getTotalCost(): int
+    {
+        $totalCost = 0;
+        foreach ($this->getWorkUnits() as $workUnit) {
+            if ($workUnit->getDuration() > 0) {
+                $totalCost += $workUnit->getDuration() * $this->getCost();
+            }
+        }
+
+        return $totalCost;
+    }
+
 }

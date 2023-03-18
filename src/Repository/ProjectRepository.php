@@ -6,6 +6,7 @@ use App\Entity\Project;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
  * @extends ServiceEntityRepository<Project>
  *
@@ -38,6 +39,50 @@ class ProjectRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function countActiveProjects(): int
+    {
+        return $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->where('p.deliveredAt IS NULL')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function countFinishedProjects(): int
+    {
+        return $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->where('p.deliveredAt IS NOT NULL')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function findLatestProjects(int $limit = 5): array
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.createdAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countProfitableProjects(): int
+    {
+        return $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->join('p.workUnits', 'w')
+            ->join('w.employe', 'e')
+            ->where('p.deliveredAt IS NOT NULL')
+            ->andWhere('p.price > (SELECT SUM(w2.duration * e2.cost) FROM App\Entity\WorkUnit w2 JOIN w2.employe e2 WHERE w2.project = p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+    
+
+
+
+
 
 //    /**
 //     * @return Project[] Returns an array of Project objects

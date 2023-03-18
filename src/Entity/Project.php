@@ -133,4 +133,19 @@ class Project
 
         return $this;
     }
+
+    public function getCost(): int
+    {
+        $cost = 0;
+        foreach ($this->workUnits as $workUnit) {
+            $dailyCost = $workUnit->getEmploye()->getCost();
+            $days = $workUnit->getDuration();
+            if ($days > 0) {
+                $cost += $dailyCost * $days;
+            }
+        }
+
+        return $cost;
+    }
+
 }

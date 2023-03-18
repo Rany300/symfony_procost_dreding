@@ -39,6 +39,25 @@ class WorkUnitRepository extends ServiceEntityRepository
         }
     }
 
+
+    public function findTotalWorkTime(): int
+    {
+        return $this->createQueryBuilder('w')
+            ->select('SUM(w.duration)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function findLatestWorkUnits(): array
+    {
+        return $this->createQueryBuilder('w')
+            ->orderBy('w.startedAt', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
+
+
 //    /**
 //     * @return WorkUnit[] Returns an array of WorkUnit objects
 //     */
