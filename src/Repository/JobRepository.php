@@ -39,6 +39,18 @@ class JobRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllWithPagination(int $page = 1, int $limit = 10): array
+    {
+        $offset = ($page - 1) * $limit;
+
+        return $this->createQueryBuilder('j')
+            ->orderBy('j.id', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Job[] Returns an array of Job objects
 //     */

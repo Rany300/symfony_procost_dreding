@@ -16,7 +16,7 @@
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <aside class="app-sidebar">
     <div class="app-sidebar__user">
-        <img class="app-sidebar__user-avatar" src="img/user.jpg" alt="User Image">
+        <img class="app-sidebar__user-avatar" src="{{asset('img/user.jpg')}}" alt="User Image">
         <div>
             <p class="app-sidebar__user-name">John Doe</p>
             <p class="app-sidebar__user-designation">Manager</p>
@@ -24,25 +24,25 @@
     </div>
     <ul class="app-menu">
         <li>
-            <a class="app-menu__item active" href="{{path('dashboard')}}">
+            <a class="app-menu__item {{app.request.get('_route') == 'dashboard' ? 'active' : ''}}" href="{{path('dashboard')}}">
                 <i class="app-menu__icon fa fa-dashboard"></i>
                 <span class="app-menu__label">Tableau de bord</span>
             </a>
         </li>
         <li>
-            <a class="app-menu__item" href="{{path('employees')}}">
+            <a class="app-menu__item {{app.request.get('_route') == 'projects' ? 'active' : ''}}" href="{{path('projects')}}">
                 <i class="app-menu__icon fa fa-laptop"></i>
                 <span class="app-menu__label">Projets</span>
             </a>
         </li>
         <li>
-            <a class="app-menu__item" href="{{path('employees')}}">
+            <a class="app-menu__item {{app.request.get('_route') == 'employees' ? 'active' : ''}}" href="{{path('employees')}}">
                 <i class="app-menu__icon fa fa-users"></i>
                 <span class="app-menu__label">Employés</span>
             </a>
         </li>
         <li>
-            <a class="app-menu__item" href="#">
+            <a class="app-menu__item {{app.request.get('_route') == 'jobs' ? 'active' : ''}}" href="{{path('jobs')}}">
                 <i class="app-menu__icon fa fa-book"></i>
                 <span class="app-menu__label">Métiers</span>
             </a>
@@ -58,15 +58,15 @@
     &copy; 2019 - PROCOST
 </footer>
 
-<script src="js/pace.min.js"></script>
+<script src="{{asset('js/pace.min.js')}}"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-<script src="js/main.js"></script>
+<script src="{{asset('js/main.js')}}"></script>
 
 <!-- Specific page JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js" integrity="sha256-oSgtFCCmHWRPQ/JmR4OoZ3Xke1Pw4v50uh6pLcu+fIc=" crossorigin="anonymous"></script>
 
-<script src="js/dashboard.js"></script>
+<script src="{{asset('js/dashboard.js')}}"></script>
 </body>
 {% endblock %}

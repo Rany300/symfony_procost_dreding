@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use App\Repository\ProjectRepository;
 use App\Repository\EmployeRepository;
 use App\Repository\WorkUnitRepository;
+use App\Repository\JobRepository;
 use App\Entity\Employe;
 use App\Entity\Project;
 use Doctrine\DBAL\Types\VarDateTimeImmutableType;
@@ -16,7 +17,7 @@ use Doctrine\DBAL\Types\VarDateTimeImmutableType;
 class MainController extends AbstractController
 {
 
-    public function __construct(private ProjectRepository $projectRepository, private EmployeRepository $employeRepository, private WorkUnitRepository $workUnitRepository)
+    public function __construct(private ProjectRepository $projectRepository, private EmployeRepository $employeRepository, private WorkUnitRepository $workUnitRepository, private JobRepository $jobRepository)
     {
     }
     
@@ -57,11 +58,52 @@ class MainController extends AbstractController
         ]);
     }
 
-    #[Route('/employees', name: 'employees')]
-    public function employees(): Response
+    #[Route('/employees/{page}', name: 'employees')]
+    public function employees(int $page = 1): Response
     {
-        return $this->render('UserInterface/list.html.twig', [
-            'controller_name' => 'MainController',
+        $employeCount = $this->employeRepository->count([]);
+        $employesPerPage = 5;
+        $maxPages = ceil($employeCount / $employesPerPage);
+        $employes = $this->employeRepository->findAllWithPagination($page, $employesPerPage);
+        
+
+
+        return $this->render('UserInterface/lists/employeeList.html.twig', [
+            'employes' => $employes,
+            'max_pages' => $maxPages,
+            'current_page' => $page,
+        ]);
+    }
+
+
+    #[Route('/projects/{page}', name: 'projects')]
+    public function projects(int $page = 1)
+    {
+        $projectCount = $this->projectRepository->count([]);
+        $projectsPerPage = 5;
+        $maxPages = ceil($projectCount / $projectsPerPage);
+        $projects = $this->projectRepository->findAllWithPagination($page, $projectsPerPage);
+
+        
+        return $this->render('UserInterface/lists/projectList.html.twig', [
+            'projects' => $projects,
+            'max_pages' => $maxPages,
+            'current_page' => $page,
+        ]);
+    }
+
+    #[Route('/jobs/{page}', name: 'jobs')]
+    public function jobs(int $page = 1): Response
+    {
+        $jobCount = $this->jobRepository->count([]);
+        $jobsPerPage = 5;
+        $maxPages = ceil($jobCount / $jobsPerPage);
+        $jobs = $this->jobRepository->findAllWithPagination($page, $jobsPerPage);
+
+        return $this->render('UserInterface/lists/jobList.html.twig', [
+            'jobs' => $jobs,
+            'max_pages' => $maxPages,
+            'current_page' => $page,
         ]);
     }
 

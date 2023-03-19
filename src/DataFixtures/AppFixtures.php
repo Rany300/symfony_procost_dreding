@@ -57,6 +57,9 @@ class AppFixtures extends Fixture
         $employe1->setImageURL('/img/ui-sherman.jpg');
         $manager->persist($employe1);
 
+
+        
+
         $employe2 = new Employe();
         $employe2->setName('Marie Dupont');
         $employe2->setJob($job2);
@@ -75,6 +78,19 @@ class AppFixtures extends Fixture
         $employe3->setImageURL('/img/user.jpg');
         $manager->persist($employe3);
 
+        
+        
+        for ($i = 0; $i < 10; $i++) {
+            $employe = new Employe();
+            $employe->setName('Employe ' . $i);
+            $employe->setJob($job1);
+            $employe->setEmail('employe' . $i . '@procost.fr');
+            $employe->setCost(230);
+            $employe->setHiredAt(new \DateTimeImmutable('2020-01-01'));
+            $employe->setImageURL('/img/ui-sherman.jpg');
+            $manager->persist($employe);
+        }
+        
         $manager->flush();
 
         // Define the work units

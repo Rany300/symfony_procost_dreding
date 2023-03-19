@@ -81,6 +81,17 @@ class ProjectRepository extends ServiceEntityRepository
     
 
 
+    public function findAllWithPagination(int $page = 1, int $limit = 10): array
+    {
+        $offset = ($page - 1) * $limit;
+
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.createdAt', 'DESC')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult();
+    }
 
 
 

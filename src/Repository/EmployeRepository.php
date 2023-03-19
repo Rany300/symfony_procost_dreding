@@ -54,6 +54,22 @@ class EmployeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAllWithPagination(int $page = 1, int $limit = 10): array
+    {
+        $offset = ($page - 1) * $limit;
+
+        return $this->getEntityManager()->createQuery(
+            'SELECT e
+        FROM App\Entity\Employe e
+        ORDER BY e.id ASC'
+        )
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getResult();
+    }
+
+    
+
 //    /**
 //     * @return Employe[] Returns an array of Employe objects
 //     */
