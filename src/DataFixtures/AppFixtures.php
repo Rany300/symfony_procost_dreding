@@ -49,7 +49,8 @@ class AppFixtures extends Fixture
 
         // Define the employes
         $employe1 = new Employe();
-        $employe1->setName('Jean Dupont');
+        $employe1->setName('Dupont');
+        $employe1->setFirstName('Jean');
         $employe1->setJob($job1);
         $employe1->setEmail('jean@procost.fr');
         $employe1->setCost(230);
@@ -61,7 +62,8 @@ class AppFixtures extends Fixture
         
 
         $employe2 = new Employe();
-        $employe2->setName('Marie Dupont');
+        $employe2->setName('Dupont');
+        $employe2->setFirstName('Marie');
         $employe2->setJob($job2);
         $employe2->setEmail('marie@procost.fr');
         $employe2->setCost(210);
@@ -70,7 +72,8 @@ class AppFixtures extends Fixture
         $manager->persist($employe2);
 
         $employe3 = new Employe();
-        $employe3->setName('Pierre Noyer');
+        $employe3->setName('Noyer');
+        $employe3->setFirstName('Pierre');
         $employe3->setJob($job3);
         $employe3->setEmail('pierre@procost.fr');
         $employe3->setCost(300);
@@ -82,7 +85,8 @@ class AppFixtures extends Fixture
         
         for ($i = 0; $i < 10; $i++) {
             $employe = new Employe();
-            $employe->setName('Employe ' . $i);
+            $employe->setName($i);
+            $employe->setFirstName('Employe');
             $employe->setJob($job1);
             $employe->setEmail('employe' . $i . '@procost.fr');
             $employe->setCost(230);

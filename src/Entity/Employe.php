@@ -36,6 +36,9 @@ class Employe
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageURL = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $firstName = null;
+
     public function __construct()
     {
         $this->workUnits = new ArrayCollection();
@@ -158,6 +161,18 @@ class Employe
         }
 
         return $totalCost;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
     }
 
 }
