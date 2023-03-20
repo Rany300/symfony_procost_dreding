@@ -1,0 +1,259 @@
+{% extends "layout.html.twig" %}
+
+
+{% block content %}
+
+<main class="app-content">
+            <div class="app-title">
+                <div>
+                    <h1><i class="fa fa-users"></i>&nbsp;Suivi de {{ employe.firstname }} {{ employe.name }}</h1>
+                </div>
+                <ul class="app-breadcrumb breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{path('dashboard')}}"><i class="fa fa-home fa-lg"></i></a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{path('employees')}}">Employés</a>
+                    </li>
+                    <li class="breadcrumb-item">Suivi de {{ employe.firstname }} {{ employe.name }}</li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="tile">
+                        <table class="table table-striped table-bordered table-sm">
+                            <tbody>
+                                <tr>
+                                    <th>Prénom</td>
+                                    <td>{{ employe.firstname }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nom</td>
+                                    <td>{{ employe.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</td>
+                                    <td>{{ employe.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Métier</td>
+                                    <td>{{ employe.job.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Coût journalier</td>
+                                    <td>{{ employe.cost }} €</td>
+                                </tr>
+                                <tr>
+                                    <th>Date d'embauche</td>
+                                    <td>{{ employe.hiredAt|date('d M Y') }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a href="{{ path('editEmployee', {'id': employe.id}) }}" class="btn btn-info">
+                            <i class="fa fa-pencil"></i>Modifier
+                        </a>
+                    </div>
+                    <div class="tile">
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-dismissible alert-success my-4">
+                    <button class="close" type="button" data-dismiss="alert">×</button><strong>Well done!</strong> {{ message }}
+                    </div>
+                {% endfor %}
+                        <h3 class="title-title mb-4">Ajouter un temps</h3>
+                        {# <form class="form-horizontal">
+                            <div class="form-group row">
+                                <label for="select-projects" class="control-label col-md-6">Projet concerné</label>
+                                <div class="col-md-6">
+                                    <select class="form-control" id="select-projects">
+                                        <option>Projet 1</option>
+                                        <option>Projet 2</option>
+                                        <option>Projet 3</option>
+                                        <option>Projet 4</option>
+                                        <option>Projet 5</option>
+                                        <option>Projet 6</option>
+                                        <option>Projet 7</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="days-count" class="control-label col-md-6">Nombre de jours</label>
+                                <div class="col-md-6">
+                                    <input id="days-count" class="form-control" type="number" min="1">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="offset-md-6 col-md-8">
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Enregistrer</a>
+                                </div>
+                            </div>
+                        </form> #}
+
+
+                        
+                        
+                
+                
+                <form class="form-horizontal" method="post">
+                            {{ form_start(form) }}
+                            <div class="form-group row">
+                                <label for="select-projects" class="control-label col-md-6">Projet concerné</label>
+                                <div class="col-md-6">
+                                    {# <select class="form-control" id="select-projects">
+                                        <option>Projet 1</option>
+                                        <option>Projet 2</option>
+                                        <option>Projet 3</option>
+                                        <option>Projet 4</option>
+                                        <option>Projet 5</option>
+                                        <option>Projet 6</option>
+                                        <option>Projet 7</option>
+                                    </select> #}
+                                    {{ form_widget(form.project, {'attr': {'class': 'form-control', 'style': form.project.vars.errors|length > 0 ? 'border-color: red;' : ''}}) }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="days-count" class="control-label col-md-6">Nombre de jours</label>
+                                <div class="col-md-6">
+                                   
+                                    {{ form_widget(form.duration, {'attr': {'class': 'form-control', 'style': form.duration.vars.errors|length > 0 ? 'border-color: red;' : ''}}) }}
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="offset-md-6 col-md-8">
+     
+                                    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-success'}}) }}
+                                </div>
+                            </div>
+                            {{ form_end(form) }}
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="tile pb-5">
+                        <h3 class="tile-title">Historique des temps de production</h3>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Projet</th>
+                                        <th>Temps</th>
+                                        <th>Date de saisie</th>
+                                        <th>Coût total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {# <tr>
+                                        <td>Nom du projet</td>
+                                        <td>4 jours</td>
+                                        <td>23-04-2018</td>
+                                        <td>1 400 €</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nom du projet</td>
+                                        <td>4 jours</td>
+                                        <td>23-04-2018</td>
+                                        <td>1 400 €</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nom du projet</td>
+                                        <td>4 jours</td>
+                                        <td>23-04-2018</td>
+                                        <td>1 400 €</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nom du projet</td>
+                                        <td>4 jours</td>
+                                        <td>23-04-2018</td>
+                                        <td>1 400 €</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nom du projet</td>
+                                        <td>4 jours</td>
+                                        <td>23-04-2018</td>
+                                        <td>1 400 €</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nom du projet</td>
+                                        <td>4 jours</td>
+                                        <td>23-04-2018</td>
+                                        <td>1 400 €</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nom du projet</td>
+                                        <td>4 jours</td>
+                                        <td>23-04-2018</td>
+                                        <td>1 400 €</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nom du projet</td>
+                                        <td>4 jours</td>
+                                        <td>23-04-2018</td>
+                                        <td>1 400 €</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nom du projet</td>
+                                        <td>4 jours</td>
+                                        <td>23-04-2018</td>
+                                        <td>1 400 €</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nom du projet</td>
+                                        <td>4 jours</td>
+                                        <td>23-04-2018</td>
+                                        <td>1 400 €</td>
+                                    </tr> #}
+                                    {% for unit in work_units %}
+                                        <tr>
+                                            <td>{{ unit.project.name }}</td>
+                                            <td>{{ unit.duration }} jours</td>
+                                            <td>{{ unit.startedAt|date('d M Y') }}</td>
+                                            <td>{{ unit.duration * employe.cost }} €</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr/>
+                        <nav class="float-right">
+                            {# <ul class="pagination">
+                                <li class="page-item disabled">
+                                    <span class="page-link">&laquo;</span>
+                                </li>
+                                <li class="page-item active" aria-current="page">
+                                    <span class="page-link">1<span class="sr-only">(current)</span></span>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">2</a></li>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">3</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">&raquo;</a>
+                                </li>
+                            </ul> #}
+                            <ul class="pagination">
+                    <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
+                        <a class="page-link" href="{{ path('employeeDetails', {'id':employe.id,'page': max(current_page - 1, 1)}) }}">&laquo;</a>
+                    </li>
+            
+                    {% set start_page = max(current_page - 1, 1) %}
+                    {% set end_page = min(start_page + 2, max_pages) %}
+            
+                    {% for page in start_page..end_page %}
+                        <li class="page-item {% if current_page == page %}active{% endif %}">
+                            <a class="page-link" href="{{ path('employeeDetails',  {'id':employe.id,'page': page}) }}">{{ page }}</a>
+                        </li>
+                    {% endfor %}
+            
+                    <li class="page-item {% if current_page == max_pages %}disabled{% endif %}">
+                        <a class="page-link" href="{{ path('employeeDetails', {'id':employe.id,'page': min(current_page + 1, max_pages)}) }}">&raquo;</a>
+                    </li>
+                </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+{% endblock %}

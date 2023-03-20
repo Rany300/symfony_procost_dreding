@@ -24,7 +24,9 @@ class WorkUnit
     #[ORM\Column]
     private ?int $duration = null;
 
-    #[ORM\Column]
+    // can be null if the work unit is not yet started
+    #[ORM\Column(nullable: true,options: ['default' => 'CURRENT_TIMESTAMP'])]
+    
     private ?\DateTimeImmutable $startedAt = null;
 
     public function getId(): ?int

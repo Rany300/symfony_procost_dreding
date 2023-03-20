@@ -197,33 +197,10 @@
                     <div class="tile">
                         <h2 class="tile-title text-center">Temps de production</h2>
                         <ul class="list-group">
-                            {# <li class="list-group-item">
-                                <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                                <div class="text-muted font-italic text-right">4 jours</div>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                                <div class="text-muted font-italic text-right">4 jours</div>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                                <div class="text-muted font-italic text-right">4 jours</div>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                                <div class="text-muted font-italic text-right">4 jours</div>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                                <div class="text-muted font-italic text-right">4 jours</div>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                                <div class="text-muted font-italic text-right">4 jours</div>
-                            </li> #}
+                           
                             {% for unit in latest_work_units %}
                             <li class="list-group-item">
-                        <a href="#">{{unit.employe.name}}</a> a travaillé sur <a href="#">{{unit.project.name}}</a>
+                        <a href="{{path('editEmployee', {'id': unit.employe.id})}}">{{unit.employe.name}}</a> a travaillé sur <a href="{{path('editProject',{'id': unit.project.id} )}}">{{unit.project.name}}</a>
                         <div class="text-muted font-italic text-right">{{unit.duration}} jours</div>
                     </li>
 
