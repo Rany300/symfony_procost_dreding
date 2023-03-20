@@ -39,7 +39,7 @@
                                 <td>{{ project.createdAt|date('d/m/Y') }}</td>
                                 <td>{{ project.deliveredAt is not null ? project.deliveredAt|date('d/m/Y') : '-' }}</td>
                                     <td>
-                                    <a href={{ path('detail') }} class="btn btn-primary btn-sm">
+                                    <a href={{ path('projectDetails', {'id': project.id}) }} class="btn btn-primary btn-sm">
                                         <i class="fa fa-eye mr-0"></i>
                                     </a>
                                     <a href={{ path('editProject', {'id': project.id }) }} class="btn btn-info btn-sm">

@@ -254,6 +254,39 @@ function editProject (int $id): Response
     ]);
 }
 
+
+
+#[Route('/project/details/{id}/{page}', name:'projectDetails')]
+function projectDetails (int $id, int $page = 1): Response
+    {
+
+        $project = $this->projectRepository->find($id);
+
+        $workUnits = $project->getWorkUnits();
+
+
+        $workUnitsCount = count($workUnits);
+
+        $MAX_PAGES = 10;
+        $maxPages = ceil($workUnitsCount / $MAX_PAGES);
+
+        $workUnits = array_slice($workUnits->toArray(), ($page - 1) * $MAX_PAGES, $MAX_PAGES);
+
+        // sort by date
+
+        usort($workUnits, function ($a, $b) {
+            return $a->getStartedAt() > $b->getStartedAt();
+        });
+
+
+    return $this->render('UserInterface/details/projectDetails.html.twig', [
+        'project' => $project,
+        'work_units' => $workUnits,
+        'max_pages' => $maxPages,
+        'current_page' => $page,
+    ]);
+    }
+
 #[Route('/jobs/{page}', name:'jobs')]
 function jobs(int $page = 1): Response
     {
@@ -308,15 +341,6 @@ function editJob (int $id): Response {
 
     return $this->render('UserInterface/forms/jobForm.html.twig', [
         'form' => $form->createView(),
-    ]);
-}
-
-
-#[Route('/detail', name:'detail')]
-function detail(): Response
-    {
-    return $this->render('UserInterface/detail.html.twig', [
-        'controller_name' => 'MainController',
     ]);
 }
 
