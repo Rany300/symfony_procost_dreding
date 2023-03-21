@@ -39,8 +39,10 @@ function index(): Response
     $profitableProjectsCount = $this->projectRepository->countProfitableProjects();
 
     $profitablePercentage = $profitableProjectsCount / ($finishedProjectsCount + $unfinishedProjectsCount) * 100;
+    
 
     $deliveryPercentage = $finishedProjectsCount / ($finishedProjectsCount + $unfinishedProjectsCount) * 100;
+    
 
     return $this->render('UserInterface/dashboard.html.twig', [
         'unfinished_projects' => $unfinishedProjectsCount,
@@ -50,8 +52,8 @@ function index(): Response
         'latest_projects' => $latestProjects,
         'latest_work_units' => $latesWorkUnits,
         'best_employe' => $bestEmploye[0] ?? null,
-        'profitable_percentage' => $profitablePercentage,
-        'delivery_percentage' => $deliveryPercentage,
+        'profitable_percentage' => round($profitablePercentage, 2),
+        'delivery_percentage' => round($deliveryPercentage, 2),
     ]);
 }
 
@@ -140,12 +142,12 @@ function editEmployee (int $id): Response
 #[Route('/employee/details/{id}/{page}', name:'employeeDetails')]
 function employeeDetails (int $id, int $page = 1): Response
     {
-
         $employe = $this->employeRepository->find($id);
 
 
         $projectChoices = [];
-        foreach ($this->projectRepository->findAll() as $project) {
+        // find all projects that are not finished
+        foreach ($this->projectRepository->findActiveProjects() as $project) {
             $projectChoices[$project->getName()] = $project;
         }
 

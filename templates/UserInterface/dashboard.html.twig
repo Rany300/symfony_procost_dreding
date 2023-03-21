@@ -115,65 +115,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {# <tr>
-                                    <th>
-                                        <a href="#">Mon projet</a>
-                                    </th>
-                                    <th>18/03/2018</th>
-                                    <th>20 000 €</th>
-                                    <th>3 200 €</th>
-                                    <th>
-                                        <span class="badge badge-success">OUI</span>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <a href="#">Mon projet</a>
-                                    </th>
-                                    <th>18/03/2018</th>
-                                    <th>20 000 €</th>
-                                    <th>3 200 €</th>
-                                    <th>
-                                        <span class="badge badge-success">OUI</span>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <a href="#">Mon projet</a>
-                                    </th>
-                                    <th>18/03/2018</th>
-                                    <th>20 000 €</th>
-                                    <th>3 200 €</th>
-                                    <th>
-                                        <span class="badge badge-success">OUI</span>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <a href="#">Mon projet</a>
-                                    </th>
-                                    <th>18/03/2018</th>
-                                    <th>20 000 €</th>
-                                    <th>3 200 €</th>
-                                    <th>
-                                        <span class="badge badge-success">OUI</span>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <a href="#">Mon projet</a>
-                                    </th>
-                                    <th>18/03/2018</th>
-                                    <th>20 000 €</th>
-                                    <th>3 200 €</th>
-                                    <th>
-                                        <span class="badge badge-danger">NON</span>
-                                    </th>
-                                </tr> #}
                                 {% for project in latest_projects %}
                                 <tr>
                                     <th>
-                                        <a>{{ project.name }}</a>
+                                        <a href="{{ path('projectDetails', {'id': project.id}) }}">{{ project.name }}</a>
                                     </th>
                                     <th>{{ project.createdAt|date('d/m/Y') }}</th>
                                     <th>{{ project.price|number_format(2, ',', ' ') }} €</th>
@@ -200,7 +145,7 @@
                            
                             {% for unit in latest_work_units %}
                             <li class="list-group-item">
-                        <a href="{{path('editEmployee', {'id': unit.employe.id})}}">{{unit.employe.name}}</a> a travaillé sur <a href="{{path('editProject',{'id': unit.project.id} )}}">{{unit.project.name}}</a>
+                        <a href="{{path('employeeDetails', {'id': unit.employe.id})}}">{{unit.employe.name}}</a> a travaillé sur <a href="{{path('projectDetails',{'id': unit.project.id} )}}">{{unit.project.name}}</a>
                         <div class="text-muted font-italic text-right">{{unit.duration}} jours</div>
                     </li>
 

@@ -30,19 +30,19 @@
             </a>
         </li>
         <li>
-            <a class="app-menu__item {{app.request.get('_route') == 'projects' ? 'active' : ''}}" href="{{path('projects')}}">
+            <a class="app-menu__item {{app.request.get('_route') in ['projects', 'editProject', 'addProject', 'projectDetails'] ? 'active' : ''}}" href="{{path('projects')}}">
                 <i class="app-menu__icon fa fa-laptop"></i>
                 <span class="app-menu__label">Projets</span>
             </a>
         </li>
         <li>
-            <a class="app-menu__item {{app.request.get('_route') == 'employees' ? 'active' : ''}}" href="{{path('employees')}}">
+            <a class="app-menu__item {{app.request.get('_route') in ['employees', 'editEmployee', 'addEmployee', 'employeeDetails'] ? 'active' : ''}}" href="{{path('employees')}}">
                 <i class="app-menu__icon fa fa-users"></i>
                 <span class="app-menu__label">Employés</span>
             </a>
         </li>
         <li>
-            <a class="app-menu__item {{app.request.get('_route') == 'jobs' ? 'active' : ''}}" href="{{path('jobs')}}">
+            <a class="app-menu__item {{app.request.get('_route') in ['jobs', 'editJob', 'addJob'] ? 'active' : ''}}" href="{{path('jobs')}}">
                 <i class="app-menu__icon fa fa-book"></i>
                 <span class="app-menu__label">Métiers</span>
             </a>

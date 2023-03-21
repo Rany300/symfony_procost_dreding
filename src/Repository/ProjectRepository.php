@@ -49,6 +49,14 @@ class ProjectRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function findActiveProjects(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.deliveredAt IS NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function countFinishedProjects(): int
     {
         return $this->createQueryBuilder('p')
