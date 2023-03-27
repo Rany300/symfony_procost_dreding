@@ -72,4 +72,9 @@ class Job
 
         return $this;
     }
+
+    public function getCanBeDeleted(): bool
+    {
+        return $this->employes->isEmpty();
+    }
 }

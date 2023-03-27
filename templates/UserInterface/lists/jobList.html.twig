@@ -51,6 +51,11 @@
                                     <a href={{ path('editJob', {'id':  job.id} )  }} class="btn btn-info btn-sm">
                                         <i class="fa fa-pencil mr-0"></i>
                                     </a>
+                                    {% if job.canBeDeleted %}
+                                        <a href={{ path('jobs', {'deleteId':  job.id} )  }} class="btn btn-danger btn-sm">
+                                            <i class="fa fa-trash mr-0"></i>
+                                        </a>
+                                    {% endif %}
                                 </tr>
                             {% endfor %}
 

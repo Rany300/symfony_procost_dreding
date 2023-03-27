@@ -10,6 +10,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
+
+
 
 class ProjectType extends AbstractType
 {
@@ -49,14 +55,21 @@ class ProjectType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-            ->add('deliveredAt', DateType::class, [
+            ->add('deliveredAt', CheckboxType::class, [
                 'required' => false,
-                'widget' => 'single_text',
-                'input' => 'datetime_immutable',
-                'constraints' => [
-                ],
-
+                'label' => 'Delivered',
+                'mapped' => false,
             ])
+            ->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+                $form = $event->getForm();
+                $project = $event->getData();
+
+                if ($form->get('deliveredAt')->getData()) {
+                    $project->setDeliveredAt(new \DateTimeImmutable());
+                } else {
+                    $project->setDeliveredAt(null);
+                }
+            })
             ->add('save', SubmitType::class);
     }
 

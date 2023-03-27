@@ -30,6 +30,16 @@ class JobRepository extends ServiceEntityRepository
         }
     }
 
+    public function delete($id): void
+    {
+        $this->createQueryBuilder('j')
+            ->delete()
+            ->where('j.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->execute();
+    }
+
     public function remove(Job $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

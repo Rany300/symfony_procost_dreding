@@ -84,11 +84,12 @@
                             </tr>
                         </tbody>
                     </table>
+                    {% if project.deliveredAt is null %}
                     <a href="{{ path('editProject', {'id': project.id}) }}" class="btn btn-info">
                         <i class="fa fa-pencil"></i>
-                        Modifier
-                                                
+                        Modifier                    
                     </a>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-md-8">

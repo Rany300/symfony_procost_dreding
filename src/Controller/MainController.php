@@ -223,6 +223,10 @@ function addProject (): Response
 
         $this->projectRepository->save($project, true);
 
+        if ($project->getDeliveredAt() !== null) {
+            return $this->redirectToRoute('projectDetails', ['id' => $project->getId()]);
+        }
+        
         $this->addFlash('success', 'Projet ajouté avec succès');
     }
 
@@ -238,6 +242,11 @@ function editProject (int $id): Response
 
     $project = $this->projectRepository->find($id);
 
+    // if project is finished, redirect to project details
+    if ($project->getDeliveredAt() !== null) {
+        return $this->redirectToRoute('projectDetails', ['id' => $id]);
+    }
+
     $form = $this->createForm(ProjectType::class,$project);
 
     $form->handleRequest(Request::createFromGlobals());
@@ -247,6 +256,10 @@ function editProject (int $id): Response
         $project = $form->getData();
 
         $this->projectRepository->save($project, true);
+
+        if ($project->getDeliveredAt() !== null) {
+            return $this->redirectToRoute('projectDetails', ['id' => $project->getId()]);
+        }
 
         $this->addFlash('success', 'Projet modifié avec succès');
     }
@@ -292,6 +305,16 @@ function projectDetails (int $id, int $page = 1): Response
 #[Route('/jobs/{page}', name:'jobs')]
 function jobs(int $page = 1): Response
     {
+    $deleteId = Request::createFromGlobals()->query->get('deleteId');
+
+    if ($deleteId) {
+        try {
+            $this->jobRepository->delete($deleteId);
+        } catch (Exception $e) {
+            $this->addFlash('error', 'Impossible de supprimer le poste');   
+        }
+    }
+
     $jobCount = $this->jobRepository->count([]);
     $jobsPerPage = 10;
     $maxPages = ceil($jobCount / $jobsPerPage);
