@@ -1,0 +1,24 @@
+{% if max_pages > 1 %}
+    <ul class="pagination">
+        <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
+            <a class="page-link" href="{{ path(app.request.attributes.get('_route'), {'page': max(current_page - 1, 1), 'id': id|default('')}) }}">&laquo;</a>
+        </li>
+
+        {% set start_page = max(current_page - 1, 1) %}
+        {% set end_page = min(start_page + 2, max_pages) %}
+
+        {% for page in start_page..end_page %}
+            <li class="page-item {% if current_page == page %}active{% endif %}">
+                {% if current_page == page %}
+                    <span class="page-link">{{ page }}</span>
+                {% else %}
+                    <a class="page-link" href="{{ path(app.request.attributes.get('_route'), {'page': page, 'id': id|default('')}) }}">{{ page }}</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+
+        <li class="page-item {% if current_page == max_pages %}disabled{% endif %}">
+            <a class="page-link" href="{{ path(app.request.attributes.get('_route'), {'page': min(current_page + 1, max_pages), 'id': id|default('')}) }}">&raquo;</a>
+        </li>
+    </ul>
+{% endif %}
