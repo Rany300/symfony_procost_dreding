@@ -310,7 +310,7 @@ function jobs(int $page = 1): Response
     if ($deleteId) {
         try {
             $this->jobRepository->delete($deleteId);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error', 'Impossible de supprimer le poste');   
         }
     }
