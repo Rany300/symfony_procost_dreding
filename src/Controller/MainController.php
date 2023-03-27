@@ -37,10 +37,7 @@ function index(): Response
     $bestEmploye = $this->employeRepository->findBestEmployes(1);
 
     $profitableProjectsCount = $this->projectRepository->countProfitableProjects();
-
-    $profitablePercentage = $profitableProjectsCount / ($finishedProjectsCount + $unfinishedProjectsCount) * 100;
-    
-
+    $profitablePercentage = $profitableProjectsCount / ($finishedProjectsCount) * 100;
     $deliveryPercentage = $finishedProjectsCount / ($finishedProjectsCount + $unfinishedProjectsCount) * 100;
     
 

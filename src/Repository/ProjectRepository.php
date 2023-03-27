@@ -6,7 +6,6 @@ use App\Entity\Project;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-
 /**
  * @extends ServiceEntityRepository<Project>
  *
@@ -78,7 +77,7 @@ class ProjectRepository extends ServiceEntityRepository
     public function countProfitableProjects(): int
     {
         return $this->createQueryBuilder('p')
-            ->select('COUNT(p.id)')
+            ->select('COUNT(DISTINCT p.id)')
             ->join('p.workUnits', 'w')
             ->join('w.employe', 'e')
             ->where('p.deliveredAt IS NOT NULL')
@@ -86,8 +85,6 @@ class ProjectRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
-    
-
 
     public function findAllWithPagination(int $page = 1, int $limit = 10): array
     {
@@ -100,8 +97,6 @@ class ProjectRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-
 
 //    /**
 //     * @return Project[] Returns an array of Project objects
