@@ -26,7 +26,7 @@ class EmployeFixtures extends Fixture implements DependentFixtureInterface
             'email' => 'marie@procost.fr',
             'cost' => 250,
             'hiredAt' => '2020-01-01',
-            'imageURL' => '/img/ui-elliot.jpg',
+            'imageURL' => '/img/ui-divya.jpg',
         ],
         [
             'name' => 'Martin',
@@ -35,7 +35,7 @@ class EmployeFixtures extends Fixture implements DependentFixtureInterface
             'email' => 'pierre@procost.fr',
             'cost' => 200,
             'hiredAt' => '2020-01-01',
-            'imageURL' => '/img/ui-jenny.jpg',
+            'imageURL' => '/img/ui-zac.jpg',
         ],
     ];
 
